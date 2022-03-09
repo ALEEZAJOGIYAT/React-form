@@ -1,0 +1,17 @@
+.form_group {
+  display: inline-flex;
+  flex-direction: column;
+  position: relative;
+  border: 0px;
+  vertical-align: top;
+  width: 100%;
+}
+.try {
+  margin-top: 40px;
+  margin-bottom: 80px;
+}
+.two_groups{
+    display:flex;
+    flex-direction: row;
+    margin-top: 20px;
+}
