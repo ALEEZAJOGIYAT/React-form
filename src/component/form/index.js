@@ -11,9 +11,13 @@ import {
   Button,
 } from "@mui/material";
 import { Validation } from "./validate";
-import { MdEdit, MdSend } from "react-icons/md";
-
+import { MdEdit, MdSend, AiFillEye } from "react-icons/md";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import "./style.scss";
+import { DatePicker, LocalizationProvider } from "@mui/lab";
+import { addData } from "../../redux/actions/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
@@ -24,30 +28,42 @@ const RegistrationForm = () => {
     govWinId: "",
     domain: "",
     descr: "",
-    rfpData: "",
-    submissionDate: "",
+    rfpDate: "",
+    lead: "",
+    // submissionDate: "",
     estTotalVal: "",
     identifiedSubs: "",
     completed: "",
   });
-  let leadSuppItem = [
+  // console.log(formData, "data-->");
+  let leadData = [
     { value: "1", label: "Prime" },
     { value: "EUR", label: "Sub" },
   ];
-  const [leadSupp, setLeadSupp] = useState("EUR");
   const [errors, setErrors] = useState({});
+  const [date, setDate] = useState(null);
+  const table_data = useSelector((state) => state.addUser || []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleChangeLead = (e) => {
-    setLeadSupp(e.target.value);
-  };
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
-    e.PreventDefault();
-    setErrors(Validation(errors));
+    e.preventDefault();
+    let obj = {
+      id: new Date().getTime().toString(),
+      formData,
+    };
+
+    table_data.push(obj);
+    dispatch(addData(table_data, date));
+    setFormData("");
+    setDate("");
+
+    // alert("submission successfully");
+    // setErrors(Validation(errors));
   };
 
   return (
@@ -72,15 +88,21 @@ const RegistrationForm = () => {
           textAlign: "start",
           transition: " .5s",
           width: "40%",
-          height: 1200,
+          height: 1100,
         }}
       >
+        <center style={{ display: "block", textAlign: "-webkit-center" }}>
+          <img
+            className="img_style"
+            src="https://abbas_form.surge.sh/images/aretec.png"
+          ></img>
+        </center>
         <FormControl
           sx={{
             display: "block",
             marginTop: "1em",
             textAlign: "start",
-            height: 900,
+            height: 1000,
           }}
           fullwidth
         >
@@ -150,13 +172,14 @@ const RegistrationForm = () => {
               <br />
             </Typography>
           </div>
+          <FormControl></FormControl>
           <div
             className="form_group"
             style={{ marginTop: "40px", marginBottom: "10px" }}
           >
             <TextField
               required
-              id="standard-basic"
+              id="standard-password-input"
               variant="standard"
               label="Company Email"
               placeholder="Enter Email"
@@ -164,7 +187,7 @@ const RegistrationForm = () => {
               value={formData.email}
               onChange={handleChange}
             />
-            {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
+            {/* {errors.email && <p style={{ color: "red" }}>{errors.email}</p>} */}
           </div>
           <div
             className="form_group"
@@ -180,6 +203,7 @@ const RegistrationForm = () => {
               value={formData.agency}
               onChange={handleChange}
             />
+            {/* {errors.agency && <p style={{ color: "red" }}>{errors.agency}</p>} */}
           </div>
           <div
             className="form_group"
@@ -210,6 +234,9 @@ const RegistrationForm = () => {
               value={formData.identity}
               onChange={handleChange}
             />
+            {/* {errors.identity && (
+              <p style={{ color: "red" }}>{errors.identity}</p>
+            )} */}
           </div>
           <div
             className="form_group"
@@ -221,10 +248,11 @@ const RegistrationForm = () => {
               variant="standard"
               label="Opportunity Overview/ Description"
               placeholder="Enter Text"
-              name="identity"
+              name="descr"
               value={formData.descr}
               onChange={handleChange}
             />
+            {/* {errors.descr && <p style={{ color: "red" }}>{errors.descr}</p>} */}
           </div>
           <div
             className="form_group"
@@ -236,8 +264,7 @@ const RegistrationForm = () => {
               variant="standard"
               label="Anticipated Submission Date"
               placeholder="Enter Text"
-              name="date"
-              value={formData.submissionDate}
+              name="submissionDate"
               onChange={handleChange}
             />
           </div>
@@ -249,39 +276,46 @@ const RegistrationForm = () => {
             <TextField
               id="outlined-select-currency"
               select
+              name="lead"
               label="Lead and Support"
-              value={leadSupp}
-              onChange={handleChangeLead}
+              value={formData.lead}
+              onChange={handleChange}
               //helperText="Please select any one"
               sx={{
                 width: "100%",
               }}
             >
-              {leadSuppItem.map((option) => (
+              {leadData.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
                   {option.label}
                 </MenuItem>
               ))}
             </TextField>
-            <TextField
-              id="outlined-select-currency"
-              type="date"
-              sx={{
-                width: "100%",
-                marginLeft: 3,
-              }}
-              helperText="Anticipated RFP Date"
-            ></TextField>
+            <div style={{ marginLeft: "5px" }}>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DatePicker
+                  label="Rfp Date"
+                  value={date}
+                  onChange={(newValue) => {
+                    setDate(newValue);
+                  }}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+            </div>
           </div>
           <div>
+            {/* <div>
             <TextField
               id="outlined-select-currency"
               type="date"
+              name="submissionDate"
+              value={formData.submissionDate}
               sx={{
                 width: "100%",
               }}
               helperText="Anticipated Submission Date"
-            ></TextField>
+            ></TextField> */}
           </div>
           <div
             className="form_group"
@@ -293,7 +327,7 @@ const RegistrationForm = () => {
               variant="standard"
               label="Estimated Total Value"
               placeholder="Enter Text"
-              name="estimate"
+              name="estTotalVal"
               value={formData.estTotalVal}
               onChange={handleChange}
             />
@@ -308,7 +342,7 @@ const RegistrationForm = () => {
               variant="standard"
               label="Identified Subs"
               placeholder="Enter Text"
-              name="subs"
+              name="identifiedSubs"
               value={formData.identifiedSubs}
               onChange={handleChange}
             />
@@ -329,14 +363,29 @@ const RegistrationForm = () => {
             />
           </div>
           <div
-            className="form_group"
-            disableRipple
-            style={{ marginTop: "55px", marginBottom: "10px" }}
-            onClick={handleSubmit}
-            endIcon={<MdSend />}
-
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              //   margin: 13,
+              marginTop: "25px",
+              //marginBottom: "10px"
+            }}
           >
-            <Button variant="contained">Submit </Button>
+            <Button
+              disableRipple
+              variant="contained"
+              onClick={handleSubmit}
+              endIcon={<MdSend />}
+              sx={{ m: 3 }}
+            >
+              Submit{" "}
+            </Button>
+            <Link to="/show">
+              <Button variant="contained" sx={{ mx: 5 }}>
+                Show Data
+              </Button>
+            </Link>
           </div>
         </FormControl>
       </div>

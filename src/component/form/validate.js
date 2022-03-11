@@ -1,34 +1,34 @@
 import React from "react";
 
-export const Validation = (data) => {
+export const Validation = (formData) => {
   let errors = {};
 
 //   identiy: "",
 //   govWinId: "",
 //   domain: "",
 //   descr: "",
-//   rfpData: "",
+//   rfpformData: "",
 //   submissionDate: "",
 //   estTotalVal: "",
 //   identifiedSubs: "",
 //   completed: "",
 
-  if (!data.email) {
+  if (!formData.email) {
     errors.email = "Email is required";
   }
-  if (!data.agency) {
+  if (!formData.agency) {
     errors.agency = "Agency is Required";
   }
-  if (!data.name) {
+  if (!formData.name) {
     errors.name = "Name no is required";
   }
-  if (!data.identity) {
+  if (!formData.identity) {
     errors.identity = "Identity is required";
   }
-  if (!data.domain) {
+  if (!formData.domain) {
     errors.domain = "Domain is required";
   }
-  if (!data.descr) {
+  if (!formData.descr) {
     errors.descr = "Description is required";
   }
 
