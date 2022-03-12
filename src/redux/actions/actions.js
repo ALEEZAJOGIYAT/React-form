@@ -11,13 +11,3 @@ export const addData = (formData, date) => {
   };
 };
 
-
-// export const showUsers=(formData,id)=>{
-//   return{
-//     type:SHOW_USERS,
-//     payload:{
-//       id,
-//       formData,
-//     }
-//   }
-// }

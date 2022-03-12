@@ -43,7 +43,7 @@ export const ShowData = () => {
           </div>
         );
       })} */}
-      {/* <TableContainer component={Paper}>
+      <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
@@ -63,7 +63,7 @@ export const ShowData = () => {
           </TableHead>
           <TableBody></TableBody>
         </Table>
-      </TableContainer> */}
+      </TableContainer>
     </div>
   );
 };

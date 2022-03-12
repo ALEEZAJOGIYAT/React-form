@@ -7,11 +7,17 @@ const initialState = {
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_USERS:
-      const { formData } = action.payload;
-      console.log("***", state);
+      const { formData, id } = action.payload;
+
       return {
         ...state,
-        data: formData,
+        data: [
+          ...state.data,
+          {
+            formData: formData,
+            id: id,
+          },
+        ],
       };
     default:
       return state;

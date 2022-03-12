@@ -42,7 +42,7 @@ const RegistrationForm = () => {
   ];
   const [errors, setErrors] = useState({});
   const [date, setDate] = useState(null);
-  const table_data = useSelector((state) => state.addUser || []);
+  // const table_data = useSelector((state) => state.addUser || []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -52,18 +52,25 @@ const RegistrationForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let obj = {
-      id: new Date().getTime().toString(),
-      formData,
-    };
 
-    table_data.push(obj);
-    dispatch(addData(table_data, date));
+    //i just set these both first then dispatch an action
+    
     setFormData("");
     setDate("");
+    // let obj = {
+    //   id: new Date().getTime().toString(),
+    //   formData,
+    // };
 
-    // alert("submission successfully");
-    // setErrors(Validation(errors));
+    // table_data.push(obj);
+    dispatch(addData(formData, date));
+   
+   //before changing
+
+    // setFormData("");
+    // setDate("");
+
+    alert("submission successfully");
   };
 
   return (
