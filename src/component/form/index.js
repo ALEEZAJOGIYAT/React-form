@@ -11,13 +11,14 @@ import {
   Button,
 } from "@mui/material";
 import { Validation } from "./validate";
-import { MdEdit, MdSend, AiFillEye } from "react-icons/md";
+import { MdEdit, MdSend } from "react-icons/md";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import "./style.scss";
 import { DatePicker, LocalizationProvider } from "@mui/lab";
 import { addData } from "../../redux/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
@@ -25,12 +26,11 @@ const RegistrationForm = () => {
     agency: "",
     name: "",
     identiy: "",
-    govWinId: "",
     domain: "",
     descr: "",
     rfpDate: "",
     lead: "",
-    // submissionDate: "",
+    subDate: "",
     estTotalVal: "",
     identifiedSubs: "",
     completed: "",
@@ -49,12 +49,14 @@ const RegistrationForm = () => {
   };
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleShow = () => {
+    navigate("./show");
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    //i just set these both first then dispatch an action
-    
     setFormData("");
     setDate("");
     // let obj = {
@@ -64,8 +66,8 @@ const RegistrationForm = () => {
 
     // table_data.push(obj);
     dispatch(addData(formData, date));
-   
-   //before changing
+
+    //before changing
 
     // setFormData("");
     // setDate("");
@@ -271,7 +273,8 @@ const RegistrationForm = () => {
               variant="standard"
               label="Anticipated Submission Date"
               placeholder="Enter Text"
-              name="submissionDate"
+              name="subDate"
+              value={formData.subDate}
               onChange={handleChange}
             />
           </div>
@@ -310,19 +313,6 @@ const RegistrationForm = () => {
                 />
               </LocalizationProvider>
             </div>
-          </div>
-          <div>
-            {/* <div>
-            <TextField
-              id="outlined-select-currency"
-              type="date"
-              name="submissionDate"
-              value={formData.submissionDate}
-              sx={{
-                width: "100%",
-              }}
-              helperText="Anticipated Submission Date"
-            ></TextField> */}
           </div>
           <div
             className="form_group"
@@ -388,11 +378,9 @@ const RegistrationForm = () => {
             >
               Submit{" "}
             </Button>
-            <Link to="/show">
-              <Button variant="contained" sx={{ mx: 5 }}>
-                Show Data
-              </Button>
-            </Link>
+            <Button variant="contained" sx={{ mx: 5 }} onClick={handleShow}>
+              Show Data
+            </Button>
           </div>
         </FormControl>
       </div>

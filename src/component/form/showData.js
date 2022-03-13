@@ -7,52 +7,46 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { Button } from "@mui/material";
+import { ArrowBack } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 export const ShowData = () => {
-  const table_data = useSelector((state) => state.addUser);
+  let table = useSelector((state) => state.addUser);
 
-  console.log("reducer data", table_data);
+  const navigate = useNavigate();
 
-  // const rows = [Tabledata.formData];
+  console.log("reducer", table);
 
-  // console.log(Tabledata, "reducer data");
+  const handleBack = () => {
+    navigate("/");
+  };
 
-  useEffect(() => {}, [table_data]);
-
-  //   email: "",
-  //   agency: "",
-  //   name: "",
-  //   identiy: "",
-  //   govWinId: "",
-  //   domain: "",
-  //   descr: "",
-  //   rfpDate: "",
-  //   lead: "",
-  //   // submissionDate: "",
-  //   estTotalVal: "",
-  //   identifiedSubs: "",
-  //   completed: "",
+  useEffect(() => {
+    console.log("job?.data", table);
+  }, [table]);
 
   return (
     <div>
-      <h2>USER DATA</h2>
-      {/* {table_data?.map(({ formData, id }, index) => {
-        return (
-          <div key={index}>
-            <h1>{formData.name}</h1>
-          </div>
-        );
-      })} */}
+      <div>
+        <h2>USER DATA</h2>
+        <Button
+          sx={{ marginLeft: -155, marginTop: -10 }}
+          onClick={handleBack}
+          variant="contained"
+        >
+          <ArrowBack />
+        </Button>
+      </div>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table sx={{ minWidth: 650, padding: 12 }} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>
               <TableCell align="right">Email</TableCell>
               <TableCell align="right">Agency</TableCell>
               <TableCell align="right">Unique Identity</TableCell>
-              <TableCell align="right">Gov win ID</TableCell>
-              <TableCell align="right">Domain</TableCell>
+              <TableCell align="right">Anticipated Submission Date</TableCell>
               <TableCell align="right">Description</TableCell>
               <TableCell align="right">Lead</TableCell>
               <TableCell align="right">Rfp Date</TableCell>
@@ -61,7 +55,28 @@ export const ShowData = () => {
               <TableCell align="right">Completion Date</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody></TableBody>
+          <TableBody>
+            {table?.data?.map(({ formData, id, date }, index) => (
+              <TableRow
+                key={id}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {formData.name}
+                </TableCell>
+                <TableCell align="right">{formData.email}</TableCell>
+                <TableCell align="right">{formData.agency}</TableCell>
+                <TableCell align="right">{formData.identity}</TableCell>
+                <TableCell align="right">{formData.subDate}</TableCell>
+                <TableCell align="right">{formData.descr}</TableCell>
+                <TableCell align="right">{formData.lead}</TableCell>
+                <TableCell align="right">{date}</TableCell>
+                <TableCell align="right">{formData.estTotalVal}</TableCell>
+                <TableCell align="right">{formData.identifiedSubs}</TableCell>
+                <TableCell align="right">{formData.submissionDate}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
         </Table>
       </TableContainer>
     </div>
