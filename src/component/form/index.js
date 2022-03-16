@@ -57,8 +57,21 @@ const RegistrationForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setFormData("");
-    setDate("");
+    setFormData({
+      email: "",
+      agency: "",
+      name: "",
+      identiy: "",
+      domain: "",
+      descr: "",
+      rfpDate: "",
+      lead: "",
+      subDate: "",
+      estTotalVal: "",
+      identifiedSubs: "",
+      completed: "",
+    });
+    setDate(null);
     // let obj = {
     //   id: new Date().getTime().toString(),
     //   formData,

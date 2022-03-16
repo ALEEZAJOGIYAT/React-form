@@ -7,12 +7,16 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { MdEdit, MdSend, MdDelete } from "react-icons/md";
+import { useDispatch } from "react-redux";
 import { Button } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { deleteUser } from "../../redux/actions/actions";
 
 export const ShowData = () => {
   let table = useSelector((state) => state.addUser);
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -20,6 +24,10 @@ export const ShowData = () => {
 
   const handleBack = () => {
     navigate("/");
+  };
+
+  const handleDelete = (id) => {
+    dispatch(deleteUser(id));
   };
 
   useEffect(() => {
@@ -62,6 +70,7 @@ export const ShowData = () => {
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
+                  {" "}
                   {formData.name}
                 </TableCell>
                 <TableCell align="right">{formData.email}</TableCell>
@@ -74,6 +83,16 @@ export const ShowData = () => {
                 <TableCell align="right">{formData.estTotalVal}</TableCell>
                 <TableCell align="right">{formData.identifiedSubs}</TableCell>
                 <TableCell align="right">{formData.submissionDate}</TableCell>
+                <TableCell align="right">
+                  <Button onClick={() => handleDelete(id)}>
+                    <MdDelete />
+                  </Button>
+                  <Button
+                   //onClick={()=>handleEdit(id,index)}
+                   >
+                    <MdEdit/>
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

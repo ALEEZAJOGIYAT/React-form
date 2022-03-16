@@ -1,4 +1,4 @@
-import { ADD_USERS } from "../actions/actionType";
+import { ADD_USERS, DELETE_USER } from "../actions/actionType";
 
 const initialState = {
   data: [],
@@ -20,6 +20,15 @@ export const reducer = (state = initialState, action) => {
           },
         ],
       };
+      case DELETE_USER:
+        const del=state.data.filter((item)=>item.id!==action.payload.id)
+        return{
+          ...state,
+          data:[
+            ...del
+          ]
+        }
+
     default:
       return state;
   }

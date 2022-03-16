@@ -1,4 +1,4 @@
-import { ADD_USERS,SHOW_USERS } from "./actionType";
+import { ADD_USERS, DELETE_USER } from "./actionType";
 
 export const addData = (formData, date) => {
   return {
@@ -11,3 +11,11 @@ export const addData = (formData, date) => {
   };
 };
 
+export const deleteUser = (id) => {
+  return {
+    type: DELETE_USER,
+    payload: {
+      id,
+    },
+  };
+};
