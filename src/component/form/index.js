@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Paper,
@@ -19,6 +19,7 @@ import { addData } from "../../redux/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Axios from "axios";
 
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
@@ -72,21 +73,32 @@ const RegistrationForm = () => {
       completed: "",
     });
     setDate(null);
-    // let obj = {
-    //   id: new Date().getTime().toString(),
-    //   formData,
-    // };
 
-    // table_data.push(obj);
-    dispatch(addData(formData, date));
+    Axios.post("http://localhost:5000/add", {
+      email: formData.email,
+      agency: formData.agency,
+      name: formData.name,
+      identiy: formData.identity,
+      domain: formData.domain,
+      descr: formData.descr,
+      rfpDate: date,
+      lead: formData.lead,
+      subDate: formData.subDate,
+      estTotalVal: formData.estTotalVal,
+      identifiedSubs: formData.identifiedSubs,
+      completed: formData.completed,
+    });
 
-    //before changing
-
-    // setFormData("");
-    // setDate("");
+    // dispatch(addData(formData, date));
 
     alert("submission successfully");
   };
+
+  useEffect(() => {
+    Axios.get("http://localhost:5000/read").then((response) => {
+      console.log(response);
+    });
+  }, []);
 
   return (
     <div
