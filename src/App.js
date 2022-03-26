@@ -1,8 +1,9 @@
 import logo from "./logo.svg";
 import "./App.css";
 import RegistrationForm from "./component/form/index";
-import { ShowData } from "./component/form/showDataRedux";
-import { ShowDataBackened } from "./component/form/showDataBackend";
+import { ShowData } from "./component/showData/showDataRedux";
+import { ShowDataBackened } from "./component/showData/showDataBackend";
+import EditForm from './component/showData/editForm'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<RegistrationForm />} />
           <Route path="/show" element={<ShowData />} />
           <Route path="/backend" element={<ShowDataBackened />} />
+          <Route path="/editform" element={<EditForm/>}/> 
         </Routes>
       </Router>
     </div>

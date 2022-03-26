@@ -15,6 +15,8 @@ mongoose.connect(url, {
   useNewUrlParser: true,
 });
 
+//for saving data into backened 
+
 app.post("/add", async (req, res) => {
   const email = req.body.email;
   const agency = req.body.agency;
@@ -61,21 +63,34 @@ app.get("/read", async (req, res) => {
   });
 });
 
+//to edit data
+
+//it is getting that selected id 
+app.get("/read/:id", async (req, res) => {
+  const id=req.params.id
+  userModel.find({_id:id}, (error, result) => {
+    if (error) {
+      res.send(error);
+    }
+
+    res.send(result);
+  });
+});
+
+// app.put("/update/:id",async(req,res)=>{
+//   const id=req.params.id 
+//   // const updatedUser= userModel.findByIdAndUpdate({},(error,result)=>{
+    
+//   // }) 
+
+// })
+
+
 // ...
 
-app.patch("/update/:id", async (request, response) => {
-  try {
-    await userModel.findByIdAndUpdate(request.params.id, request.body);
-    await userModel.save();
-    response.send(user);
-  } catch (error) {
-    response.status(500).send(error);
-  }
-})
 
 
-
-
+//for delete
 app.delete("/delete/:id", async (req, res) => {
   const id = req.params.id;
   await userModel.findByIdAndDelete(id);
